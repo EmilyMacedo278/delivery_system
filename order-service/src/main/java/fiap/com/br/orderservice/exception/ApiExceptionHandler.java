@@ -45,5 +45,17 @@ public class ApiExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("error", "Invalid request"));
     }
+
+    @ExceptionHandler(PaymentFailedException.class)
+    public ResponseEntity<Map<String, String>> handlePaymentFailed(
+            PaymentFailedException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_GATEWAY)
+                .body(Map.of(
+                        "error",
+                        exception.getMessage()
+                ));
+    }
 }
 
